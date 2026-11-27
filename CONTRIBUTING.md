@@ -22,7 +22,7 @@ Needs Rust (stable), Node 20+ and the Tauri 2 prerequisites for Windows.
 
 ## Design and screenshots
 
-The UI spec is in [`design/DESIGN.md`](design/DESIGN.md). If you change the UI, update `design/app.html` and re-render the README images:
+The UI spec is in [`DESIGN notes are inline`](DESIGN notes are inline). If you change the UI, update `design/app.html` and re-render the README images:
 
 ```bash
 pip install playwright pillow && playwright install chromium   # ffmpeg must be on PATH
