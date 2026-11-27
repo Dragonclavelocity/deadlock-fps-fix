@@ -1,3 +1,4 @@
+// v1.0.1 maintenance
 //! Deadlock FPS Fix — Tauri backend.
 //! Reads and writes Deadlock config files, applies FPS presets.
 
