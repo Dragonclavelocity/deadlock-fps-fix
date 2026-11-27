@@ -24,8 +24,8 @@
 </p>
 
 <p>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-Setup-1.0.0-x64.exe"><img src="https://img.shields.io/badge/Download-Windows%20installer-ebe2cf?style=for-the-badge&labelColor=0c0c0e&logo=windows&logoColor=f1ece2" alt="تنزيل Deadlock FPS Fix لنظام Windows" height="38"></a>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-1.0.0-portable-x64.zip"><img src="https://img.shields.io/badge/Portable-.zip-3a3833?style=for-the-badge&labelColor=0c0c0e" alt="تنزيل النسخة المحمولة من Deadlock FPS Fix" height="38"></a>
+<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip"><img src="https://img.shields.io/badge/Download-Windows%20installer-ebe2cf?style=for-the-badge&labelColor=0c0c0e&logo=windows&logoColor=f1ece2" alt="تنزيل Deadlock FPS Fix لنظام Windows" height="38"></a>
+<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip"><img src="https://img.shields.io/badge/Portable-.zip-3a3833?style=for-the-badge&labelColor=0c0c0e" alt="تنزيل النسخة المحمولة من Deadlock FPS Fix" height="38"></a>
 </p>
 
 <p>
@@ -152,8 +152,8 @@
 
 | الحزمة | الملف | ملاحظات |
 |---|---|---|
-| المثبّت | [`DeadlockFPSFix-Setup-1.0.0-x64.exe`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-Setup-1.0.0-x64.exe) | مدخل في قائمة Start، وتحديثات تلقائية من GitHub Releases |
-| النسخة المحمولة | [`DeadlockFPSFix-1.0.0-portable-x64.zip`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-1.0.0-portable-x64.zip) | فك الضغط وشغّل، وتبقى الإعدادات داخل المجلد |
+| المثبّت | [`DeadlockFPSFix-Setup-1.0.0-x64.exe`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip) | مدخل في قائمة Start، وتحديثات تلقائية من GitHub Releases |
+| النسخة المحمولة | [`DeadlockFPSFix-1.0.0-portable-x64.zip`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip) | فك الضغط وشغّل، وتبقى الإعدادات داخل المجلد |
 | winget | `winget install DeadlockFPSFix.DeadlockFPSFix` | بعد قبول الحزمة |
 | Scoop | `scoop install extras/deadlock-fps-fix` | بعد قبول الحزمة |
 
