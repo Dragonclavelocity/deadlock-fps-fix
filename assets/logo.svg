@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="t">
+  <title id="t">Deadlock FPS Fix logo</title>
+  <rect width="256" height="256" rx="64" fill="#0c0c0e"/>
+  <circle cx="128" cy="128" r="76" fill="none" stroke="#ebe2cf" stroke-width="16"/>
+  <rect x="98" y="120" width="60" height="16" rx="3" fill="#ebe2cf"/>
+</svg>

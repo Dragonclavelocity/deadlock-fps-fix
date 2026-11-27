@@ -1,0 +1,53 @@
+name: Bug report
+description: Something isn't working in Deadlock FPS Fix
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please search [existing issues](https://github.com/Dragonclavelocity/deadlock-fps-fix/issues) first.
+        Tip: *Settings → Copy diagnostics* fills most fields below. It contains no personal data.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Steps to reproduce, what you expected and what you got.
+      placeholder: "1. Set field of view to 110°  2. Start Deadlock  3. Camera is still at 90°"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [FPS presets, Field of view, Resolution / stretched, Launch options, Shader cache, Backups / restore, Settings, Installer / updates, Other]
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Windows version
+      options: [Windows 11, Windows 10]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Deadlock FPS Fix version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: game
+    attributes:
+      label: Deadlock patch date
+      placeholder: "2026-11-20"
+  - type: input
+    id: hw
+    attributes:
+      label: GPU / CPU / monitor
+      placeholder: "RX 6700 XT · Ryzen 5 5600 · 2560×1440 165 Hz"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Diagnostics / log
+      render: shell

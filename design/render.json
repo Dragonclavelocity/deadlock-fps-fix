@@ -1,0 +1,115 @@
+{
+  "_comment": "Run from repo root: python design/render.py .  (python design/marketing/gen_banner.py first if the banner changed).",
+  "jobs": [
+    {
+      "name": "shot-presets",
+      "type": "png",
+      "src": "design/app.html#screen=presets",
+      "out": "assets/screenshots/deadlock-fps-presets.png",
+      "w": 1280,
+      "h": 800,
+      "scale": 2
+    },
+    {
+      "name": "shot-fov",
+      "type": "png",
+      "src": "design/app.html#screen=fov",
+      "out": "assets/screenshots/deadlock-fov-changer.png",
+      "w": 1280,
+      "h": 800,
+      "scale": 2
+    },
+    {
+      "name": "shot-resolution",
+      "type": "png",
+      "src": "design/app.html#screen=resolution",
+      "out": "assets/screenshots/deadlock-stretched-resolution.png",
+      "w": 1280,
+      "h": 800,
+      "scale": 2
+    },
+    {
+      "name": "shot-launch",
+      "type": "png",
+      "src": "design/app.html#screen=launch",
+      "out": "assets/screenshots/deadlock-launch-options.png",
+      "w": 1280,
+      "h": 800,
+      "scale": 2
+    },
+    {
+      "name": "shot-backups",
+      "type": "png",
+      "src": "design/app.html#screen=backups",
+      "out": "assets/screenshots/deadlock-settings-backup-restore.png",
+      "w": 1280,
+      "h": 800,
+      "scale": 2
+    },
+    {
+      "name": "shot-settings",
+      "type": "png",
+      "src": "design/app.html#screen=settings",
+      "out": "assets/screenshots/deadlock-fps-fix-settings.png",
+      "w": 1280,
+      "h": 800,
+      "scale": 2
+    },
+    {
+      "name": "gif-presets",
+      "type": "gif",
+      "src": "design/app.html#screen=presets&demo=apply",
+      "out": "assets/gifs/deadlock-fps-presets.gif",
+      "w": 1280,
+      "h": 800,
+      "dur": 6000,
+      "fps": 12,
+      "out_w": 960,
+      "colors": 160
+    },
+    {
+      "name": "gif-fov",
+      "type": "gif",
+      "src": "design/app.html#screen=fov&demo=fov",
+      "out": "assets/gifs/deadlock-fov-slider.gif",
+      "w": 1280,
+      "h": 800,
+      "dur": 6000,
+      "fps": 12,
+      "out_w": 960,
+      "colors": 160
+    },
+    {
+      "name": "gif-resolution",
+      "type": "gif",
+      "src": "design/app.html#screen=resolution&demo=res",
+      "out": "assets/gifs/deadlock-stretched-resolution.gif",
+      "w": 1280,
+      "h": 800,
+      "dur": 6000,
+      "fps": 12,
+      "out_w": 960,
+      "colors": 160
+    },
+    {
+      "name": "banner-png",
+      "type": "png",
+      "src": "design/marketing/banner.html",
+      "out": "assets/banner.png",
+      "w": 1280,
+      "h": 400,
+      "scale": 2,
+      "t": 1000,
+      "dur": 12000
+    },
+    {
+      "name": "social",
+      "type": "png",
+      "src": "design/marketing/social.html",
+      "out": "assets/social-preview.png",
+      "w": 1280,
+      "h": 640,
+      "scale": 1
+    }
+  ]
+}

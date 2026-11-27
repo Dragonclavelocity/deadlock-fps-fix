@@ -1,0 +1,54 @@
+# Deadlock FPS Fix
+
+> Deadlock FPS Fix is a free, open-source Deadlock FPS boost and settings tool for Windows 10 and 11 that applies FPS presets estimated for your PC, sets a custom field of view and a stretched or lower resolution, and clears the shader cache to fix stutter.
+
+Deadlock FPS Fix is a desktop app for players of Valve's Deadlock whose frame rate drops in late-game team fights. It reads the GPU, CPU and monitor, estimates the frame rate of three presets (Competitive, Balanced, Quality) and writes the chosen values to the game's own video.txt after saving a backup and clearing the shader cache.
+
+Field of view up to 90° uses the same value as the in-game Camera FOV slider. Above 90° the app uses an unofficial community method, an r_aspectratio value in game\citadel\gameinfo.gi. That part is experimental: it is not a Valve setting, Valve may change or block it, and game updates restore the original file (the app can re-apply it on the next launch).
+
+Resolution can be native, a lower 16:9 size, 4:3 stretched (1440x1080 or 1280x960) or a custom size. The stretch itself is done by the GPU driver; the app checks whether GPU scaling is on and shows where to switch it. The app does not fix server lag or an overheating PC.
+
+## Key facts
+
+- Price: free, no account, no ads, no telemetry
+- License: MIT
+- Platforms: Windows 10 (21H2+) and Windows 11, 64-bit, Deadlock installed through Steam; no Linux or Steam Deck in 1.0
+- Version: 1.0.0 (installer and portable zip, about 15 MB on disk)
+- Network: goes online only to check GitHub Releases for updates, and that can be turned off
+- What it changes: game\citadel\cfg\video.txt (graphics values, resolution), game\citadel\gameinfo.gi only for FOV above 90°, launch options that you paste into Steam yourself, shader cache folders (Steam pre-cache and DirectX cache), Windows Game Mode, hardware GPU scheduling and power plan
+- What it never touches: the game process or its memory, game binaries, maps or other assets, the Steam account, Steam's own files; nothing is changed without a backup first
+- Anti-cheat: Deadlock uses VAC. Nothing is injected, there is no overlay, driver or background service. FOV above 90° is an experimental, unofficial community workaround. The project cannot promise anything on behalf of Valve; for the lowest risk, use only the presets and keep FOV at 90° or below.
+- Built with: Rust, Tauri 2, TypeScript
+- Languages: English and Spanish
+
+## Features
+
+- Three presets with estimated fps for your hardware: Competitive, Balanced, Quality
+- Field of view slider with a preview next to the in-game 90° maximum
+- Native, 16:9 and 4:3 stretched resolution, custom sizes, GPU scaling check
+- Shader cache clear (Steam pre-cache and DirectX cache)
+- Launch options builder: -novid, -w and -h, +fps_max
+- Backups before every change, history and one-click restore of the original settings
+- Test PC estimate (RX 6700 XT, Ryzen 5 5600, 2560x1440, late-game fights, 94 fps before): Competitive 168, Balanced 141, Quality 112 fps; numbers on other PCs differ
+
+## Common questions
+
+- How do I change FOV in Deadlock past 90? — Only with an unofficial community method, because the in-game Camera FOV slider stops at 90°. Deadlock FPS Fix writes an r_aspectratio value in gameinfo.gi for you, with a backup; it is experimental and game updates restore the original file.
+- How do I get a stretched resolution in Deadlock? — Set a 4:3 resolution such as 1440x1080, set Deadlock to Fullscreen and turn on full-screen GPU scaling in AMD Software or the NVIDIA Control Panel. Without GPU scaling you get black bars instead of a stretch.
+- Can I get banned for using Deadlock FPS Fix? — The project cannot promise anything on behalf of Valve. The app only changes settings files, launch options and Windows options and never touches the game process or memory; FOV above 90° is an unofficial workaround, so keep FOV at 90° or below for the lowest risk.
+- What are the best Deadlock settings for FPS? — For most PCs: FSR upscaling, shadows Low or Off, ambient occlusion Off, V-Sync Off and a frame cap at your refresh rate minus 3. The app picks the preset for your hardware.
+- Why does Deadlock stutter, and does clearing the shader cache help? — Mostly because shaders are compiled while you play, especially after an update or driver change, and clearing the shader cache often helps. The first match after clearing may stutter a little.
+- Where is the Deadlock video.txt file? — In <Steam library>\steamapps\common\Deadlock\game\citadel\cfg\video.txt.
+- What launch options should I use for Deadlock? — -novid to skip the intro video, -w and -h for a lower or stretched resolution, and +fps_max for a frame cap. -high rarely helps.
+- How do I undo everything? — Open Backups, pick Original settings and click Restore, then remove the launch options from Steam yourself.
+- Is it free and does it collect data? — Yes, it is free under MIT and collects no data. It only goes online to check for updates.
+- Does it work on Linux or the Steam Deck? — No, not in 1.0. Linux support through Proton prefixes is on the roadmap.
+
+## Links
+
+- [README](https://github.com/Dragonclavelocity/deadlock-fps-fix#readme): presets, field of view, resolution, what the app changes, download and FAQ
+- [Download](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest): installer, portable zip and SHA256SUMS.txt
+- [README en español](https://github.com/Dragonclavelocity/deadlock-fps-fix/blob/main/README.es.md): Spanish version of the README
+- [README بالعربية](https://github.com/Dragonclavelocity/deadlock-fps-fix/blob/main/README.ar.md): Arabic (right-to-left) version of the README
+- [README हिन्दी में](https://github.com/Dragonclavelocity/deadlock-fps-fix/blob/main/README.hi.md): Hindi version of the README
+- [README 简体中文版](https://github.com/Dragonclavelocity/deadlock-fps-fix/blob/main/README.zh-CN.md): Simplified Chinese version of the README

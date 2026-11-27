@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Deadlock FPS Fix — app UI (all screens, #screen=presets|fov|resolution|launch|backups|settings)</title>
+<link rel="stylesheet" href="dlf.css">
+<style>
+/* presets (main, reference) */
+.presets{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ps{background:var(--glass);border:1px solid var(--edge);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column}
+.ps.on{border:1.5px solid var(--acc);background:var(--glass-on)}
+.ps .h{display:flex;justify-content:space-between;align-items:center;min-height:24px}
+.ps .h b{font-weight:600;font-size:15px}
+.fps{font-family:var(--serif);font-size:64px;line-height:1;margin-top:10px}
+.fps small{font-family:var(--sans);font-size:14px;color:var(--text-2);margin-left:8px}
+.d{color:var(--text-2);font-size:13px;margin-top:2px}
+.ps .btn{position:relative;overflow:hidden}
+.ps.on .btn{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.btn .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(21,19,15,.16)}
+.btn .lbl{position:relative}
+.ps.on .btn.done{background:transparent;color:var(--text);border-color:var(--edge)}
+
+/* bottom grids */
+.lower{margin-top:auto;display:grid;gap:14px;min-height:0}
+.g-side{grid-template-columns:1fr 360px}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-bk{grid-template-columns:1fr 470px}
+
+/* fov */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.frame.wide{aspect-ratio:16/9}
+.frame.wide img{left:0;top:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%}
+.outline{position:absolute;border:1.5px dashed var(--acc);border-radius:4px;left:50%;top:50%;transform:translate(-50%,-50%)}
+.outline span{position:absolute;left:6px;top:4px;font-size:11px;color:var(--acc);font-weight:600}
+.howrow{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--edge);font-size:13px}
+.howrow span{color:var(--text-2)}
+.howrow b{font-weight:500;text-align:right}
+.howrow:first-child{border-top:0}
+.note{color:var(--text-3);font-size:12px;line-height:1.45;margin:10px 0 14px}
+
+/* resolution */
+.rc{background:var(--glass);border:1px solid var(--edge);border-radius:18px;padding:14px 16px 16px;display:flex;flex-direction:column}
+.rc.on{border:1.5px solid var(--acc);background:var(--glass-on)}
+.rc .frame{height:136px}
+.rc .frame img{top:0;height:100%}
+.rc .h{display:flex;justify-content:space-between;align-items:center;margin-top:12px;min-height:24px}
+.rc .h b{font-weight:600;font-size:14.5px}
+.rv{font-family:var(--serif);font-size:40px;line-height:1;margin-top:6px}
+.rv small{font-family:var(--sans);font-size:13px;color:var(--text-2);margin-left:8px}
+.rc .d{margin-top:4px}
+.rc .btn{margin-top:12px;height:40px}
+.rc.on .btn{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.custom{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--text-2)}
+.inp{background:var(--well);border:1px solid var(--edge);border-radius:8px;padding:5px 10px;color:var(--text);min-width:58px;text-align:center}
+.custom .btn{margin-left:auto}
+
+/* launch */
+.opt{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-top:1px solid var(--edge)}
+.opt:first-of-type{margin-top:12px}
+.opt .t{flex:1}
+.opt .t b{font-weight:500}
+.opt .t p{color:var(--text-2);font-size:12.5px;margin-top:2px}
+.opt .ck{margin-top:1px}
+.result{margin-top:auto;padding:14px 16px;background:var(--well);border:1px solid var(--edge);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.result .mono{font-size:14px;color:var(--text)}
+.steps{counter-reset:s;margin-top:12px}
+.steps div{counter-increment:s;display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--edge);font-size:13px;color:var(--text-2)}
+.steps div::before{content:counter(s);width:20px;height:20px;border-radius:50%;border:1px solid var(--edge);display:grid;place-items:center;font-size:11.5px;color:var(--text);flex:none}
+.steps b{color:var(--text);font-weight:500}
+
+/* backups */
+.bk{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:12px;margin-top:4px}
+.bk.on{background:var(--chip)}
+.bk .when{width:92px;color:var(--text-3);font-size:12.5px;flex:none}
+.bk .t{flex:1}
+.bk .t b{font-weight:500}
+.bk .t p{color:var(--text-2);font-size:12.5px;margin-top:2px}
+table.cmpt{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+.cmpt th{text-align:left;color:var(--text-3);font-weight:500;font-size:12px;padding:0 0 8px}
+.cmpt td{padding:8px 0;border-top:1px solid var(--edge)}
+.cmpt td:first-child{color:var(--text-2)}
+.cmpt td.n{font-weight:500}
+.cmpt td.a{color:var(--acc)}
+.cmpt th:nth-child(2),.cmpt th:nth-child(3),.cmpt td:nth-child(2),.cmpt td:nth-child(3){width:118px}
+
+/* settings */
+.trow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 0;border-top:1px solid var(--edge);font-size:13px}
+.trow:first-of-type{margin-top:12px}
+.trow p{color:var(--text-3);font-size:12px;margin-top:2px}
+.path{font-family:Consolas,"Cascadia Mono",ui-monospace,monospace;font-size:12px;color:var(--text);word-break:break-all;text-align:right;max-width:200px}
+.chg{font-size:13px;line-height:1.5;margin-top:12px;color:var(--text-2)}
+.chg b{color:var(--text);font-weight:500}
+.chg p+p{margin-top:8px}
+</style>
+</head>
+<body>
+<div class="stage">
+<img class="bgimg" id="bg" src="img/deadlock-bg.jpg" alt="">
+<div class="shade"></div>
+<div class="app">
+  <div class="bar">
+    <div class="mark"><i></i></div>
+    <div class="brand">Deadlock FPS Fix</div>
+    <div class="spacer"></div>
+    <div class="ib" id="ib-launch" title="Launch options and shader cache"><svg viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="m4.5 6.5 2 1.75-2 1.75M8.5 10.5h3"/></svg></div>
+    <div class="ib" id="ib-settings" title="Settings"><svg viewBox="0 0 16 16"><path d="M2 4.5h12M2 11.5h12"/><circle cx="10.5" cy="4.5" r="1.8" fill="#15130f"/><circle cx="5.5" cy="11.5" r="1.8" fill="#15130f"/></svg></div>
+    <div class="pill" id="pill">Game closed · config files only</div>
+    <div class="win">
+      <span><svg width="10" height="10"><path d="M0 5h10" stroke="currentColor"/></svg></span>
+      <span><svg width="10" height="10"><rect x=".5" y=".5" width="9" height="9" fill="none" stroke="currentColor"/></svg></span>
+      <span><svg width="10" height="10"><path d="M0 0l10 10M10 0 0 10" stroke="currentColor"/></svg></span>
+    </div>
+  </div>
+
+  <div class="tabs"><span data-s="presets">FPS presets</span><span data-s="fov">Field of view</span><span data-s="resolution">Resolution</span><span data-s="backups">Backups</span></div>
+
+  <!-- ============ FPS presets (main, approved reference) ============ -->
+  <section class="screen" id="s-presets">
+    <div class="upper">
+      <div class="hero">
+        <div class="eyebrow" id="ps-eyebrow">RX 6700 XT · Ryzen 5 5600 · 1440p · now 94 fps in late-game fights</div>
+        <h1>Smooth frames,<br><em>even at 40 minutes.</em></h1>
+      </div>
+      <div class="side">
+        <div class="mini">
+          <div class="mh"><b>Field of view</b><span>Hero camera</span></div>
+          <div class="mv">110°<small>was 90°</small></div>
+          <div class="track"><i style="width:66.7%"></i><b style="left:66.7%"></b></div>
+          <div class="ticks"><span>70</span><span>90</span><span>110</span><span>130</span></div>
+        </div>
+        <div class="mini">
+          <div class="mh"><b>Resolution</b><span>GPU scaled</span></div>
+          <div class="mv">1920×1080<small>on a 2560×1440 screen</small></div>
+          <div class="seg"><span>Native</span><span class="on">16:9 1080p</span><span>4:3 1440×1080</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="presets">
+      <div class="ps">
+        <div class="h"><b>Competitive</b></div>
+        <div class="fps">168<small>fps · +74</small></div>
+        <div class="d">Cleanest image to read fights, flatter look</div>
+        <div class="list"><span>Upscaling</span><b>FSR Performance</b><span>Shadows</span><b>Off</b><span>Frame cap</span><b>237</b></div>
+        <div class="btn">Apply</div>
+      </div>
+      <div class="ps on">
+        <div class="h"><b>Balanced</b><span class="tag" id="ps-tag">Best for your PC</span></div>
+        <div class="fps">141<small>fps · +47</small></div>
+        <div class="d">Looks close to default, no drops in team fights</div>
+        <div class="list"><span>Upscaling</span><b>FSR Quality</b><span>Shadows</span><b>Low</b><span>Frame cap</span><b>162</b></div>
+        <div class="btn" id="ps-apply"><div class="fill" id="ps-fill"></div><span class="lbl" id="ps-lbl">Apply Balanced</span></div>
+      </div>
+      <div class="ps">
+        <div class="h"><b>Quality</b></div>
+        <div class="fps">112<small>fps · +18</small></div>
+        <div class="d">Keeps every effect, fixes stutter only</div>
+        <div class="list"><span>Upscaling</span><b>Native</b><span>Shadows</span><b>Medium</b><span>Frame cap</span><b>162</b></div>
+        <div class="btn">Apply</div>
+      </div>
+    </div>
+    <div class="foot"><span id="ps-foot">Every preset clears the shader cache and saves a backup first.</span><span>Not affiliated with Valve</span></div>
+  </section>
+
+  <!-- ============ Field of view ============ -->
+  <section class="screen" id="s-fov">
+    <div class="upper">
+      <div class="hero">
+        <div class="eyebrow">Hero camera · the in-game Camera FOV slider stops at 90°</div>
+        <h1>See the whole lane,<br><em>not just your hero.</em></h1>
+      </div>
+      <div class="side">
+        <div class="mini">
+          <div class="mh"><b>Field of view</b><span id="fv-range">Above the in-game range</span></div>
+          <div class="mv"><span id="fv-val">110°</span><small>was 90°</small></div>
+          <div class="track" id="fv-track"><u style="left:33.33%"></u><i id="fv-fill" style="width:66.7%"></i><b id="fv-knob" style="left:66.7%"></b></div>
+          <div class="ticks"><span>70</span><span>90</span><span>110</span><span>130</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lower g-side">
+      <div class="card">
+        <div class="ch"><b>What you see</b><span class="sub">Preview from a still, not a live capture</span></div>
+        <div class="cmp">
+          <div>
+            <div class="frame wide"><img id="fv-a" src="img/ss4.jpg" alt=""></div>
+            <div class="cap"><b>90°</b><span>In-game maximum</span></div>
+          </div>
+          <div>
+            <div class="frame wide"><img id="fv-b" src="img/ss4.jpg" alt=""><div class="outline" id="fv-out"><span>90°</span></div></div>
+            <div class="cap"><b id="fv-cap">110°</b><span>With Deadlock FPS Fix</span></div>
+          </div>
+        </div>
+        <div class="note" style="margin:auto 0 0">Wider shows more of the lane and your flanks. Heroes and the HUD world look smaller, and edges stretch a little.</div>
+      </div>
+      <div class="card">
+        <div class="ch"><b>How it is applied</b><span class="tag ghost" id="fv-kind">Experimental</span></div>
+        <div style="margin-top:12px">
+          <div class="howrow"><span>Up to 90°</span><b>In-game Camera FOV</b></div>
+          <div class="howrow"><span>Above 90°</span><b class="mono" id="fv-ar">r_aspectratio 3.07</b></div>
+          <div class="howrow"><span>Written to</span><b class="mono">citadel\gameinfo.gi</b></div>
+          <div class="howrow"><span>After game updates</span><div class="tg on"></div></div>
+        </div>
+        <div class="note" id="fv-note">Above 90° is a community workaround, not a Valve setting. Updates restore the file; the app re-applies it.</div>
+        <div class="btn pri" id="fv-btn" style="margin-top:auto">Apply 110°</div>
+      </div>
+    </div>
+    <div class="foot"><span>A backup of gameinfo.gi is saved before the first change.</span><span>Not affiliated with Valve</span></div>
+  </section>
+
+  <!-- ============ Resolution ============ -->
+  <section class="screen" id="s-resolution">
+    <div class="upper">
+      <div class="hero">
+        <div class="eyebrow">2560×1440 · 165 Hz · RX 6700 XT · AMD GPU scaling on</div>
+        <h1>Fewer pixels,<br><em>same screen.</em></h1>
+        <p>The resolution goes to video.txt and your launch options. Your GPU driver does the stretch, so the image fills the whole panel.</p>
+      </div>
+      <div class="side">
+        <div class="mini">
+          <div class="mh"><b>Resolution</b><span id="rs-kind">GPU scaled</span></div>
+          <div class="mv"><span id="rs-val">1920×1080</span><small>on a 2560×1440 screen</small></div>
+          <div class="seg" id="rs-seg"><span>Native</span><span class="on">16:9 1080p</span><span>4:3 1440×1080</span></div>
+          <div class="custom">Custom <span class="inp">1600</span>×<span class="inp">900</span><div class="btn sm">Use</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lower g-3" id="rs-cards">
+      <div class="rc" data-r="native">
+        <div class="frame"><img src="img/ss1.jpg" alt="" style="left:0;width:100%;object-fit:cover"></div>
+        <div class="h"><b>Native</b><span class="tag ghost" data-def="Sharpest">Sharpest</span></div>
+        <div class="rv">2560×1440<small>108 fps</small></div>
+        <div class="d">No scaling, every pixel rendered</div>
+        <div class="btn">Use native</div>
+      </div>
+      <div class="rc on" data-r="169">
+        <div class="frame"><img src="img/ss1.jpg" alt="" style="left:0;width:100%;object-fit:cover"></div>
+        <div class="h"><b>16:9 lower</b><span class="tag" data-def="Same shape">Applied</span></div>
+        <div class="rv">1920×1080<small>141 fps</small></div>
+        <div class="d">Same shape, a little softer on 1440p</div>
+        <div class="btn">Applied</div>
+      </div>
+      <div class="rc" data-r="43">
+        <div class="frame"><img src="img/ss1.jpg" alt="" style="left:-16.67%;width:133.34%;object-fit:fill"></div>
+        <div class="h"><b>4:3 stretched</b><span class="tag ghost" data-def="Wider heroes">Wider heroes</span></div>
+        <div class="rv">1440×1080<small>156 fps</small></div>
+        <div class="d">Heroes look wider, less to the sides</div>
+        <div class="btn">Stretch to 4:3</div>
+      </div>
+    </div>
+    <div class="foot"><span>Estimates with the Balanced preset. Fullscreen display mode is needed for the stretch.</span><span>Not affiliated with Valve</span></div>
+  </section>
+
+  <!-- ============ Launch options + shader cache ============ -->
+  <section class="screen" id="s-launch">
+    <div class="upper">
+      <div class="hero">
+        <div class="eyebrow">Steam · Library · Deadlock · Properties · Launch options</div>
+        <h1>Launch options,<br><em>and a clean cache.</em></h1>
+      </div>
+      <div class="side">
+        <div class="mini">
+          <div class="mh"><b>Shader cache</b><span>Steam + DirectX</span></div>
+          <div class="mv">1.4 GB<small>last cleared after the Nov 21 update</small></div>
+          <div class="custom" style="margin-top:12px">Rebuilds during your next match<div class="btn sm">Clear</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lower g-side">
+      <div class="card">
+        <div class="ch"><b>Launch options</b><span class="sub">5 options · 3 on</span></div>
+        <div class="opt"><div class="ck on"></div><div class="t"><b class="mono">-novid</b><p>Skips the intro video when the game starts.</p></div><span class="tag ghost">Recommended</span></div>
+        <div class="opt"><div class="ck on"></div><div class="t"><b class="mono">-w 1920 -h 1080</b><p>Render resolution from the Resolution tab.</p></div><span class="tag ghost">From Resolution</span></div>
+        <div class="opt"><div class="ck on"></div><div class="t"><b class="mono">+fps_max 162</b><p>Frame cap from the Balanced preset: 165 Hz minus 3.</p></div><span class="tag ghost">From preset</span></div>
+        <div class="opt"><div class="ck"></div><div class="t"><b class="mono">-vulkan</b><p>Vulkan renderer instead of DirectX 11. Test both if you stutter.</p></div><span class="tag ghost">Optional</span></div>
+        <div class="opt"><div class="ck"></div><div class="t"><b class="mono">-high</b><p>High process priority. Rarely helps, can add stutter on 6-core CPUs.</p></div><span class="tag ghost">Not advised</span></div>
+        <div class="result"><span class="mono">-novid -w 1920 -h 1080 +fps_max 162</span><span style="color:var(--text-3);font-size:12px">37 characters</span></div>
+      </div>
+      <div class="card">
+        <div class="ch"><b>Where it goes</b><span class="sub">Steam · D:\SteamLibrary</span></div>
+        <div class="steps">
+          <div><span>Close Deadlock, then open your <b>Steam Library</b>.</span></div>
+          <div><span>Right-click <b>Deadlock</b> and choose <b>Properties</b>.</span></div>
+          <div><span>Under <b>General</b>, paste into <b>Launch options</b>.</span></div>
+        </div>
+        <div class="note">The app never edits Steam's own files. Copy, paste, done.</div>
+        <div class="ch" style="margin-top:18px"><b>What Clear removes</b><span class="sub">Rebuilt automatically</span></div>
+        <div style="margin-top:6px">
+          <div class="howrow"><span>Steam shader pre-cache</span><b class="mono">shadercache\1422450</b></div>
+          <div class="howrow"><span>DirectX shader cache</span><b class="mono">AMD\DxCache</b></div>
+        </div>
+        <div class="btn pri" style="margin-top:auto">Copy launch options</div>
+      </div>
+    </div>
+    <div class="foot"><span>Launch options work for every match; remove them any time from the same box.</span><span>Not affiliated with Valve</span></div>
+  </section>
+
+  <!-- ============ Backups ============ -->
+  <section class="screen" id="s-backups">
+    <div class="upper">
+      <div class="hero">
+        <div class="eyebrow">5 backups · 184 KB · nothing is ever overwritten</div>
+        <h1>Every change,<br><em>one click from undone.</em></h1>
+      </div>
+      <div class="side">
+        <div class="mini">
+          <div class="mh"><b>Original settings</b><span>Kept forever</span></div>
+          <div class="mv">Nov 3<small>saved on first launch, before any change</small></div>
+          <div class="custom" style="margin-top:12px">video.txt, gameinfo.gi, Windows options<div class="btn sm">Restore</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lower g-bk">
+      <div class="card">
+        <div class="ch"><b>History</b><span class="sub">Newest first</span></div>
+        <div style="margin-top:8px">
+          <div class="bk on"><span class="when">Today 21:14</span><div class="t"><b>Before Balanced preset</b><p>video.txt · launch options · shader cache cleared</p></div></div>
+          <div class="bk"><span class="when">Today 20:58</span><div class="t"><b>Before field of view 110°</b><p>gameinfo.gi</p></div></div>
+          <div class="bk"><span class="when">Yesterday</span><div class="t"><b>Before 1920×1080</b><p>video.txt · launch options</p></div></div>
+          <div class="bk"><span class="when">Nov 21</span><div class="t"><b>Game update reset gameinfo.gi</b><p>Field of view re-applied on launch</p></div></div>
+          <div class="bk"><span class="when">Nov 3</span><div class="t"><b>Original settings</b><p>Everything, before the first change</p></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><b>Before Balanced preset</b><span class="sub">Today 21:14</span></div>
+        <table class="cmpt"><thead><tr><th>Setting</th><th>Now</th><th>In backup</th></tr></thead><tbody id="bk-rows"></tbody></table>
+        <div class="note" id="bk-note">Restoring saves the current state as a new backup first.</div>
+        <div class="btn pri" id="bk-btn" style="margin-top:auto">Restore this backup</div>
+      </div>
+    </div>
+    <div class="foot"><span>Backups live in %APPDATA%\DeadlockFPSFix\backups as plain text.</span><span>Not affiliated with Valve</span></div>
+  </section>
+
+  <!-- ============ Settings ============ -->
+  <section class="screen" id="s-settings">
+    <div class="upper">
+      <div class="hero">
+        <div class="eyebrow">Version 1.0.0 · MIT license · no account, no telemetry</div>
+        <h1>Settings,<br><em>kept quiet.</em></h1>
+      </div>
+      <div class="side">
+        <div class="mini">
+          <div class="mh"><b>Language</b><span>Interface</span></div>
+          <div class="seg"><span class="on">English</span><span>Español</span></div>
+          <div class="custom" style="margin-top:12px">Updates from GitHub Releases<div class="btn sm">Check now</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lower g-3">
+      <div class="card">
+        <div class="ch"><b>Game and PC</b><span class="sub">Detected</span></div>
+        <div class="trow"><span>Game folder</span><span class="path">D:\SteamLibrary\…\Deadlock</span></div>
+        <div class="trow"><span>Graphics file</span><span class="path">game\citadel\cfg\video.txt</span></div>
+        <div class="trow"><span>FOV file</span><span class="path">game\citadel\gameinfo.gi</span></div>
+        <div class="trow"><span>GPU</span><b style="font-weight:500">RX 6700 XT · 12 GB</b></div>
+        <div class="trow"><span>Monitor</span><b style="font-weight:500">2560×1440 · 165 Hz</b></div>
+      </div>
+      <div class="card">
+        <div class="ch"><b>Behaviour</b><span class="sub">Saved automatically</span></div>
+        <div class="trow"><div>Back up before every change</div><div class="tg on"></div></div>
+        <div class="trow"><div>Re-apply field of view after updates</div><div class="tg on"></div></div>
+        <div class="trow"><div>Clear shader cache with presets</div><div class="tg on"></div></div>
+        <div class="trow"><div>Pause changes while Deadlock runs</div><div class="tg on"></div></div>
+        <div class="trow"><div>Start with Windows</div><div class="tg"></div></div>
+      </div>
+      <div class="card">
+        <div class="ch"><b>What this app changes</b><span class="sub">And what it never does</span></div>
+        <div class="chg">
+          <p><b>Changes:</b> video.txt graphics values, gameinfo.gi (only for field of view above 90°), the launch options you paste, and Windows Game Mode, GPU scheduling and power plan.</p>
+          <p><b>Never:</b> the game process, its memory, game binaries or anti-cheat. Nothing is injected.</p>
+        </div>
+        <div class="btn" style="margin-top:auto">Copy diagnostics</div>
+      </div>
+    </div>
+    <div class="foot"><span>Deadlock is a trademark of Valve Corporation.</span><span>Not affiliated with Valve</span></div>
+  </section>
+
+</div>
+<svg class="cursor" id="cursor" viewBox="0 0 20 24"><path d="M2 1.5v17.2l4.6-4.1 3.1 6.9 2.9-1.3-3.1-6.8h6.3z" fill="#fff" stroke="#0a0a0c" stroke-width="1.4" stroke-linejoin="round"/></svg>
+</div>
+
+<script>
+const params = new URLSearchParams(location.hash.slice(1));
+const SCREEN = params.get('screen') || 'presets';
+const DEMO = params.get('demo') || '';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+/* one official Steam screenshot behind each screen: [file, object-position, zoom, zoom origin] */
+const BG = {
+  presets:    ['deadlock-bg.jpg', '50% 40%', 1, '50% 50%'],
+  fov:        ['ss1.jpg', '50% 50%', 1, '50% 50%'],
+  resolution: ['ss3.jpg', '50% 35%', 1, '50% 50%'],
+  backups:    ['ss2.jpg', '50% 50%', 1.6, '100% 0%'],
+  launch:     ['ss1.jpg', '50% 50%', 1.45, '88% 45%'],
+  settings:   ['ss4.jpg', '50% 50%', 1.35, '50% 12%'],
+};
+const bg = $('#bg'), b = BG[SCREEN];
+bg.src = 'img/' + b[0]; bg.style.objectPosition = b[1];
+bg.style.transform = `scale(${b[2]})`; bg.style.transformOrigin = b[3];
+
+$('#s-' + SCREEN).classList.add('on');
+$$('.tabs span').forEach(t => t.classList.toggle('on', t.dataset.s === SCREEN));
+$('#ib-launch').classList.toggle('on', SCREEN === 'launch');
+$('#ib-settings').classList.toggle('on', SCREEN === 'settings');
+const CHECK = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#15130f" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg>';
+$$('.ck').forEach(c => c.innerHTML = CHECK);
+
+/* ---------- backups table: now vs in backup ---------- */
+const BK = [
+  ['Upscaling', 'FSR Quality', 'Native'],
+  ['Shadow quality', 'Low', 'High'],
+  ['Ambient occlusion', 'Off', 'Medium'],
+  ['Frame cap', '162', 'Unlimited'],
+  ['Resolution', '1920×1080', '1920×1080'],
+  ['Launch options', '3 options', '2 options'],
+  ['GPU scheduling', 'On', 'Off'],
+];
+$('#bk-rows').innerHTML = BK.map(([k, now, was]) =>
+  `<tr><td>${k}</td><td class="n ${now !== was ? 'a' : ''}" data-now="${now}" data-was="${was}">${now}</td><td class="n">${was}</td></tr>`).join('');
+
+/* ---------- field of view ---------- */
+const FMIN = 70, FMAX = 130, FULL = 130;              // the still is treated as a 130° view
+const tanh = d => Math.tan(d * Math.PI / 360);
+const crop = f => tanh(f) / tanh(FULL);              // share of the still visible at f degrees
+const aspect = f => tanh(f) / tanh(90) * 2.15;        // community mapping: r_aspectratio 2.15 ≈ 90°
+function setFov(f) {
+  f = Math.round(f);
+  const p = (f - FMIN) / (FMAX - FMIN) * 100;
+  $('#fv-fill').style.width = p.toFixed(2) + '%';
+  $('#fv-knob').style.left = p.toFixed(2) + '%';
+  $('#fv-val').textContent = f + '°';
+  $('#fv-cap').textContent = f + '°';
+  $('#fv-btn').textContent = `Apply ${f}°`;
+  $('#fv-b').style.transform = `scale(${(1 / crop(f)).toFixed(4)})`;
+  const above = f > 90;
+  $('#fv-range').textContent = above ? 'Above the in-game range' : 'In-game range';
+  $('#fv-kind').textContent = above ? 'Experimental' : 'In-game setting';
+  $('#fv-ar').textContent = above ? 'r_aspectratio ' + aspect(f).toFixed(2) : 'not used';
+  const o = $('#fv-out'), share = tanh(90) / tanh(f);
+  o.style.display = above ? 'block' : 'none';
+  o.style.width = (share * 100).toFixed(2) + '%'; o.style.height = (share * 100).toFixed(2) + '%';
+}
+$('#fv-a').style.transform = `scale(${(1 / crop(90)).toFixed(4)})`;
+setFov(110);
+
+/* ---------- cursor ---------- */
+const cur = $('#cursor');
+function center(el) { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }
+function cursorAt(x, y, down) {
+  cur.style.display = 'block';
+  cur.style.transform = `translate(${x - 2}px, ${y - 1}px) scale(${down ? .9 : 1})`;
+}
+function moveCursor(t, path) { // path: [[t, x, y], ...]
+  for (let i = 0; i < path.length - 1; i++) {
+    const [ta, xa, ya] = path[i], [tb, xb, yb] = path[i + 1];
+    if (t >= ta && t <= tb) { const k = ease(clamp((t - ta) / (tb - ta))); return [xa + (xb - xa) * k, ya + (yb - ya) * k]; }
+  }
+  const l = path[path.length - 1]; return [l[1], l[2]];
+}
+function seg(t, path) { // piecewise eased value: [[t, v], ...]
+  for (let i = 0; i < path.length - 1; i++) {
+    const [ta, va] = path[i], [tb, vb] = path[i + 1];
+    if (t >= ta && t <= tb) return va + (vb - va) * ease(clamp((t - ta) / (tb - ta)));
+  }
+  return path[path.length - 1][1];
+}
+
+/* ---------- demo: apply the Balanced preset ---------- */
+function applyAt(t) {
+  const btn = $('#ps-apply'), [bx, by] = center(btn);
+  const home = [bx + 60, by - 300];
+  const [cx, cy] = moveCursor(t, [[0, ...home], [250, ...home], [950, bx + 40, by + 6], [3600, bx + 40, by + 6], [4300, ...home], [6000, ...home]]);
+  const press = t > 1000 && t < 1150;
+  cursorAt(cx, cy, press);
+  btn.style.transform = press ? 'scale(.98)' : '';
+  const steps = [[1150, 'Saving a backup'], [1700, 'Clearing shader cache · 1.4 GB'], [2350, 'Writing video.txt · 12 values'], [2950, 'Writing launch options']];
+  const s = 1150, e = 3450, fadeAt = 5300;
+  const running = t >= s && t < e, done = t >= e && t < fadeAt + 300;
+  let lbl = 'Apply Balanced';
+  steps.forEach(([ts, txt]) => { if (running && t >= ts) lbl = txt; });
+  if (done) lbl = 'Applied · restart Deadlock';
+  $('#ps-lbl').textContent = lbl;
+  $('#ps-fill').style.width = running ? (clamp((t - s) / (e - s)) * 100).toFixed(1) + '%' : '0%';
+  btn.classList.toggle('done', done);
+  $('#ps-tag').textContent = done ? 'Applied' : 'Best for your PC';
+  $('#ps-eyebrow').textContent = done ? 'Balanced applied · backup saved · shader cache cleared' : 'RX 6700 XT · Ryzen 5 5600 · 1440p · now 94 fps in late-game fights';
+  const fade = t >= fadeAt ? Math.abs(clamp((t - fadeAt) / 600) * 2 - 1) : 1; // dip to 0 at the state swap
+  [btn, $('#ps-tag'), $('#ps-eyebrow')].forEach(el => el.style.opacity = fade.toFixed(3));
+}
+
+/* ---------- demo: drag the field of view slider ---------- */
+function fovAt(t) {
+  const tr = $('#fv-track').getBoundingClientRect();
+  const xOf = f => tr.left + (f - FMIN) / (FMAX - FMIN) * tr.width, yk = tr.top + tr.height / 2;
+  const f = seg(t, [[0, 110], [700, 110], [2000, 125], [2400, 125], [3900, 90], [4300, 90], [5300, 110], [6000, 110]]);
+  setFov(f);
+  const home = [xOf(110) - 40, yk + 150];
+  const [hx, hy] = moveCursor(t, [[0, ...home], [150, ...home], [650, xOf(110), yk]]);
+  const dragging = t >= 650 && t <= 5350;
+  const [cx, cy] = t < 650 ? [hx, hy] : dragging ? [xOf(f), yk] : moveCursor(t, [[5350, xOf(110), yk], [5900, ...home], [6000, ...home]]);
+  cursorAt(cx, cy, dragging);
+}
+
+/* ---------- demo: switch resolution to 4:3 stretched and back ---------- */
+const RS = {
+  native: ['2560×1440', 'Native', 'Use native', 0],
+  '169': ['1920×1080', 'GPU scaled', 'Use 16:9', 1],
+  '43': ['1440×1080', 'Stretched 4:3', 'Stretch to 4:3', 2],
+};
+function setRes(key) {
+  $$('#rs-cards .rc').forEach(c => {
+    const on = c.dataset.r === key, r = RS[c.dataset.r];
+    c.classList.toggle('on', on);
+    c.querySelector('.btn').textContent = on ? 'Applied' : r[2];
+    const tg = c.querySelector('.tag'); tg.classList.toggle('ghost', !on); tg.textContent = on ? 'Applied' : tg.dataset.def;
+  });
+  const r = RS[key];
+  $('#rs-val').textContent = r[0];
+  $('#rs-kind').textContent = r[1];
+  $$('#rs-seg span').forEach((s, i) => s.classList.toggle('on', i === r[3]));
+}
+function resAt(t) {
+  const b43 = $('[data-r="43"] .btn'), b169 = $('[data-r="169"] .btn');
+  const [ax, ay] = center(b43), [bx2, by2] = center(b169);
+  const home = [bx2, by2 - 210];
+  const [cx, cy] = moveCursor(t, [[0, ...home], [200, ...home], [900, ax + 30, ay + 6], [1500, ax + 30, ay + 6], [2200, ax - 60, ay - 230], [3300, ax - 60, ay - 230], [4000, bx2 + 30, by2 + 6], [4500, bx2 + 30, by2 + 6], [5300, ...home], [6000, ...home]]);
+  const p1 = t > 950 && t < 1100, p2 = t > 4050 && t < 4200;
+  cursorAt(cx, cy, p1 || p2);
+  b43.style.transform = p1 ? 'scale(.98)' : ''; b169.style.transform = p2 ? 'scale(.98)' : '';
+  setRes(t >= 1100 && t < 4200 ? '43' : '169');
+}
+
+/* ---------- demo: restore a backup ---------- */
+function restoreAt(t) {
+  const btn = $('#bk-btn'); const [bx, by] = center(btn);
+  const home = [bx - 380, by - 280];
+  const [cx, cy] = moveCursor(t, [[0, ...home], [200, ...home], [950, bx + 90, by + 6], [3000, bx + 90, by + 6], [3700, bx - 200, by - 60], [5500, bx - 200, by - 60], [6000, ...home]]);
+  const press = t > 1000 && t < 1140;
+  cursorAt(cx, cy, press);
+  btn.style.transform = press ? 'scale(.98)' : '';
+  const s = 1150, e = 2750;
+  const cells = $$('#bk-rows td[data-now]');
+  const n = Math.floor(clamp((t - s) / (e - s)) * cells.length + 1e-6);
+  const fade = t >= 5300 ? clamp((t - 5300) / 600) : 0;
+  cells.forEach((c, i) => {
+    const restored = i < n && fade < .5;
+    c.textContent = restored ? c.dataset.was : c.dataset.now;
+    c.classList.toggle('a', !restored && c.dataset.now !== c.dataset.was);
+    c.style.opacity = fade > 0 ? Math.abs(fade * 2 - 1).toFixed(3) : 1;
+  });
+  const running = t >= s && t < e, done = t >= e && fade < .5;
+  btn.textContent = running ? `Restoring ${Math.max(1, Math.min(cells.length, n + 1))} of ${cells.length}` : done ? 'Restored · restart Deadlock' : 'Restore this backup';
+  btn.classList.toggle('pri', !done);
+  $('#bk-note').textContent = done ? 'Restored. The state before it was saved as a new backup.' : 'Restoring saves the current state as a new backup first.';
+}
+
+window.__seek = (t, dur) => {
+  window.__seeking = true;
+  if (DEMO === 'apply') applyAt(t);
+  if (DEMO === 'fov') fovAt(t);
+  if (DEMO === 'res') resAt(t);
+  if (DEMO === 'restore') restoreAt(t);
+};
+if (DEMO) {
+  window.__seek(0, 6000); window.__seeking = false;
+  const t0 = performance.now();
+  (function loop() {
+    if (window.__seeking) return;
+    window.__seek((performance.now() - t0) % 6000, 6000); window.__seeking = false;
+    requestAnimationFrame(loop);
+  })();
+}
+</script>
+</body>
+</html>

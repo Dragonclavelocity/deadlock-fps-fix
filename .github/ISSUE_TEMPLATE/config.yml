@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discord — setup help
+    url: https://github.com/DISCORD_INVITE
+    about: Quickest way to get help with presets, field of view and stretched resolution.
+  - name: Ideas and votes
+    url: https://github.com/Dragonclavelocity/deadlock-fps-fix/discussions/categories/ideas
+    about: Suggest and upvote ideas from the community.
+  - name: Security vulnerability
+    url: https://github.com/Dragonclavelocity/deadlock-fps-fix/security/advisories/new
+    about: Please report security issues privately.

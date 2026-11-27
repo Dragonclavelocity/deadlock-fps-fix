@@ -1,0 +1,30 @@
+name: Feature request
+description: Suggest a preset, setting or improvement for Deadlock FPS Fix
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      placeholder: "After every Deadlock patch I have to…"
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: If it is a new setting, say which file, value, launch option or Windows option it changes, and how to undo it.
+  - type: textarea
+    id: numbers
+    attributes:
+      label: Measurements (for preset changes)
+      description: Hardware, resolution, situation (for example a late-game team fight) and frame times before and after.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and Discussions
+          required: true
+        - label: The idea only changes settings files, launch options or Windows options (no injection, no memory access, no game binary changes)
+          required: true
