@@ -12,7 +12,6 @@
 
 <p>
 <a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest"><img src="https://img.shields.io/github/v/release/Dragonclavelocity/deadlock-fps-fix?style=flat&labelColor=0c0c0e&color=ebe2cf&label=release" alt="Deadlock FPS Fix का latest release"></a>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases"><img src="https://img.shields.io/github/downloads/Dragonclavelocity/deadlock-fps-fix/total?style=flat&labelColor=0c0c0e&color=3a3833&label=downloads" alt="Deadlock FPS Fix के downloads"></a>
 <a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/stargazers"><img src="https://img.shields.io/github/stars/Dragonclavelocity/deadlock-fps-fix?style=flat&labelColor=0c0c0e&color=3a3833" alt="GitHub stars"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3a3833?style=flat&labelColor=0c0c0e" alt="MIT license"></a>
 <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-3a3833?style=flat&labelColor=0c0c0e" alt="Windows 10 और Windows 11">
