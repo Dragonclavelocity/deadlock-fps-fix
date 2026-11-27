@@ -12,7 +12,6 @@
 
 <p>
 <a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest"><img src="https://img.shields.io/github/v/release/Dragonclavelocity/deadlock-fps-fix?style=flat&labelColor=0c0c0e&color=ebe2cf&label=versi%C3%B3n" alt="Última versión de Deadlock FPS Fix"></a>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases"><img src="https://img.shields.io/github/downloads/Dragonclavelocity/deadlock-fps-fix/total?style=flat&labelColor=0c0c0e&color=3a3833&label=descargas" alt="Descargas de Deadlock FPS Fix"></a>
 <a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/stargazers"><img src="https://img.shields.io/github/stars/Dragonclavelocity/deadlock-fps-fix?style=flat&labelColor=0c0c0e&color=3a3833&label=estrellas" alt="Estrellas en GitHub"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/licencia-MIT-3a3833?style=flat&labelColor=0c0c0e" alt="Licencia MIT"></a>
 <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-3a3833?style=flat&labelColor=0c0c0e" alt="Windows 10 y Windows 11">
