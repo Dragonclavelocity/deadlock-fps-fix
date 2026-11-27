@@ -20,8 +20,8 @@
 </p>
 
 <p>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-Setup-1.0.0-x64.exe"><img src="https://img.shields.io/badge/Download-Windows%20installer-ebe2cf?style=for-the-badge&labelColor=0c0c0e&logo=windows&logoColor=f1ece2" alt="下载 Windows 版 Deadlock FPS Fix" height="38"></a>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-1.0.0-portable-x64.zip"><img src="https://img.shields.io/badge/Portable-.zip-3a3833?style=for-the-badge&labelColor=0c0c0e" alt="下载便携版 Deadlock FPS Fix" height="38"></a>
+<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip"><img src="https://img.shields.io/badge/Download-Windows%20installer-ebe2cf?style=for-the-badge&labelColor=0c0c0e&logo=windows&logoColor=f1ece2" alt="下载 Windows 版 Deadlock FPS Fix" height="38"></a>
+<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip"><img src="https://img.shields.io/badge/Portable-.zip-3a3833?style=for-the-badge&labelColor=0c0c0e" alt="下载便携版 Deadlock FPS Fix" height="38"></a>
 </p>
 
 <p>
@@ -150,8 +150,8 @@ Deadlock FPS Fix 会读取你的 GPU、CPU 和显示器信息，估算三个预�
 
 | 安装包 | 文件 | 说明 |
 |---|---|---|
-| 安装版 | [`DeadlockFPSFix-Setup-1.0.0-x64.exe`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-Setup-1.0.0-x64.exe) | 添加开始菜单项，通过 GitHub Releases 自动更新 |
-| 便携版 | [`DeadlockFPSFix-1.0.0-portable-x64.zip`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/DeadlockFPSFix-1.0.0-portable-x64.zip) | 解压即可运行，设置保存在该文件夹内 |
+| 安装版 | [`DeadlockFPSFix-Setup-1.0.0-x64.exe`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip) | 添加开始菜单项，通过 GitHub Releases 自动更新 |
+| 便携版 | [`DeadlockFPSFix-1.0.0-portable-x64.zip`](https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest/download/deadlock-fps-fix.zip) | 解压即可运行，设置保存在该文件夹内 |
 | winget | `winget install DeadlockFPSFix.DeadlockFPSFix` | 软件包审核通过后可用 |
 | Scoop | `scoop install extras/deadlock-fps-fix` | 软件包审核通过后可用 |
 
