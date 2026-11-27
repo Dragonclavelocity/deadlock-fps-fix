@@ -281,3 +281,7 @@ Deadlock FPS Fix is an independent fan project. It is **not affiliated with, end
 <p>If Deadlock FPS Fix gave you smoother frames, <b>⭐ star the repo</b> so other players can find it.</p>
 <sub>Keywords: deadlock fps boost, deadlock fps fix, deadlock best settings, deadlock fov, deadlock fov changer, deadlock stretched resolution, deadlock 4:3, deadlock stutter fix, deadlock shader cache, deadlock launch options, deadlock video.txt, deadlock low end pc</sub>
 </div>
+
+---
+
+Reviewed with [Claude](https://claude.ai) — the AI assistant from Anthropic.
