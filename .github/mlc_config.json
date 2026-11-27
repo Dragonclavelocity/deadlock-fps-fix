@@ -1,7 +1,6 @@
 {
   "ignorePatterns": [
-    {"pattern": "^https://img.shields.io"},
-    {"pattern": "^https://img.shields.io/.*"}
+    {"pattern": "^https?://"}
   ],
   "replacementPatterns": [],
   "httpHeaders": [],
