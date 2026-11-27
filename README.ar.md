@@ -16,7 +16,6 @@
 
 <p>
 <a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases/latest"><img src="https://img.shields.io/github/v/release/Dragonclavelocity/deadlock-fps-fix?style=flat&labelColor=0c0c0e&color=ebe2cf&label=release" alt="أحدث إصدار من Deadlock FPS Fix"></a>
-<a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/releases"><img src="https://img.shields.io/github/downloads/Dragonclavelocity/deadlock-fps-fix/total?style=flat&labelColor=0c0c0e&color=3a3833&label=downloads" alt="عدد تنزيلات Deadlock FPS Fix"></a>
 <a href="https://github.com/Dragonclavelocity/deadlock-fps-fix/stargazers"><img src="https://img.shields.io/github/stars/Dragonclavelocity/deadlock-fps-fix?style=flat&labelColor=0c0c0e&color=3a3833" alt="نجوم GitHub"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3a3833?style=flat&labelColor=0c0c0e" alt="رخصة MIT"></a>
 <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-3a3833?style=flat&labelColor=0c0c0e" alt="Windows 10 وWindows 11">
