@@ -1,0 +1,16 @@
+{
+  "ignorePatterns": [
+    {"pattern": "^https://img.shields.io"},
+    {"pattern": "^https://img.shields.io/.*"}
+  ],
+  "replacementPatterns": [],
+  "httpHeaders": [],
+  "timeout": "10s",
+  "retryOn429": true,
+  "retryCount": 3,
+  "fallbackConfig": {
+    "forbiddenStatusCodes": [401, 403, 429, 500, 502, 503],
+    "checkExternalModification": false
+  },
+  "aliveStatusCodes": [200, 206, 301, 302, 307, 308]
+}
